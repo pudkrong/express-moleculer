@@ -1,0 +1,60 @@
+{
+  "name": "error-handler2",
+  "version": "1.0.0",
+  "description": "My Moleculer-based microservices project",
+  "scripts": {
+    "dev": "moleculer-runner --repl --hot services/**/*.service.js",
+    "start": "moleculer-runner",
+    "cli": "moleculer connect Redis",
+    "ci": "jest --watch",
+    "test": "jest --coverage",
+    "dc:up": "docker-compose up --build -d",
+    "dc:logs": "docker-compose logs -f",
+    "dc:down": "docker-compose down",
+    "web": "node ./bin/www",
+    "lint": "eslint --fix ."
+  },
+  "keywords": [
+    "microservices",
+    "moleculer"
+  ],
+  "author": "",
+  "devDependencies": {
+    "eslint": "^7.13.0",
+    "eslint-config-semistandard": "^15.0.1",
+    "eslint-config-standard": "^16.0.2",
+    "eslint-plugin-import": "^2.22.1",
+    "eslint-plugin-node": "^11.1.0",
+    "eslint-plugin-promise": "^4.2.1",
+    "eslint-plugin-standard": "^4.1.0",
+    "jest": "^26.4.2",
+    "jest-cli": "^26.4.2",
+    "moleculer-repl": "^0.6.4"
+  },
+  "dependencies": {
+    "cookie-parser": "~1.4.4",
+    "debug": "~2.6.9",
+    "express": "~4.16.1",
+    "hbs": "~4.0.4",
+    "http-errors": "~1.6.3",
+    "ioredis": "^4.17.3",
+    "json-rules-engine": "^5.0.4",
+    "lodash": "^4.17.20",
+    "moleculer": "^0.14.10",
+    "moleculer-axios": "^0.1.2",
+    "morgan": "~1.9.1",
+    "redlock": "^4.2.0",
+    "tortoise": "^1.0.1"
+  },
+  "engines": {
+    "node": ">= 10.x.x"
+  },
+  "jest": {
+    "coverageDirectory": "../coverage",
+    "testEnvironment": "node",
+    "rootDir": "./services",
+    "roots": [
+      "../test"
+    ]
+  }
+}

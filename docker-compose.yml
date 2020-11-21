@@ -1,0 +1,28 @@
+version: "3.3"
+
+services:
+
+
+  greeter:
+    build:
+      context: .
+    image: error-handler2
+    env_file: docker-compose.env
+    environment:
+      SERVICES: greeter
+    depends_on:
+      - redis
+    networks:
+      - internal
+
+  redis:
+    image: redis:alpine
+    networks:
+      - internal
+
+
+networks:
+  internal:
+
+volumes:
+  data:

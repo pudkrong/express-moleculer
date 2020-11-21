@@ -1,0 +1,100 @@
+#########################################################
+# Common Environment variables ConfigMap
+#########################################################
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: common-env
+data:
+  NAMESPACE: ""
+  LOGLEVEL: info
+  SERVICEDIR: services
+  
+  TRANSPORTER: redis://redis:6379
+  
+  
+  
+  
+  
+  
+  CACHER: redis://redis:6379
+  
+
+
+---
+#########################################################
+# Greeter service
+#########################################################
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: greeter
+spec:
+  selector:
+    matchLabels:
+      app: greeter
+  replicas: 2
+  template:
+    metadata:
+      labels:
+        app: greeter
+    spec:
+      containers:
+      - name: greeter
+        image: error-handler2
+        envFrom:
+        - configMapRef:
+            name: common-env
+        env:
+          - name: SERVICES
+            value: greeter
+
+
+
+---
+#########################################################
+# Redis service
+#########################################################
+apiVersion: v1
+kind: Service
+metadata:
+  name: redis
+spec:
+  selector:
+    app: redis
+  ports:
+  - port: 6379
+    name: redis
+    targetPort: 6379
+
+---
+#########################################################
+# Redis server (transporter/cacher)
+#########################################################
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: redis
+spec:
+  selector:
+    matchLabels:
+      app: redis
+  replicas: 1
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      labels:
+        app: redis
+    spec:
+      containers:
+      - name: redis
+        image: redis
+        ports:
+        - containerPort: 6379
+          name: redis
+
+
+
+
+
